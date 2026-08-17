@@ -6,6 +6,8 @@ import zerxStats from "./assets/zerx-stats.jpeg";
 import shinobiStats from "./assets/shinobi-stats.jpeg";
 import indraStats from "./assets/indra-stats.jpeg";
 import bunnyStats from "./assets/bunny-stats.jpeg";
+import shadowStats from "./assets/shadow-stats.jpeg";
+import joseStats from "./assets/jose-stats.jpeg";
 
 const members = [
   "CHEMA",
@@ -46,7 +48,8 @@ const members = [
   "Lando",
   "savit",
   "indra",
-  "obito"
+  "obito",
+  "Jose"
 ];
 const leaders = [
   { name: "LOBO", role: "leader", number: "01" },
@@ -442,7 +445,9 @@ function App() {
     Zerx: zerxStats,
     shinobi: shinobiStats,
     indra: indraStats,
-    Bunny: bunnyStats
+    Bunny: bunnyStats,
+    Shadow: shadowStats,
+    Jose: joseStats
   };
 
   const [selectedMember, setSelectedMember] = useState(null);
