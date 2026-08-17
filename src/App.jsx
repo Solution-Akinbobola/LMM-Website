@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Analytics } from "@vercel/analytics/react";
 import "./App.css";
 
-import lmmLogo from "./lmm-logo.png";
+import lmmLogo from "./assets/lmm-logo.png";
 
 import zerxStats from "./assets/zerx-stats.jpeg";
 import shinobiStats from "./assets/shinobi-stats.jpeg";
@@ -583,11 +583,10 @@ function App() {
       {/* NAVBAR */}
       <header className="navbar">
         <a href="#home" className="brand">
-          <img src={lmmLogo} alt="LMM Logo" className="brand-mark" />
-
+            <img src={lmmLogo} alt="LMM Logo" className="brand-mark" />
           <div>
             <strong>LMM</strong>
-            <span>LEGENDS OF MINIMILITIA</span>
+              <span>LEGENDS OF MINIMILITIA</span>
           </div>
         </a>
 
