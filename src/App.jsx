@@ -280,7 +280,11 @@ const translations = {
     followTikTok: "FOLLOW TIKTOK ↗",
 
     establishedShort: "EST.",
-    footer: "© 2019 — 2026 LMM"
+    footer: "© 2019 — 2026 LMM",
+
+    statsFor: "PLAYER STATS",
+    statsClose: "Close stats",
+    statsUnavailable: "Stats coming soon"
   },
 
   es: {
@@ -388,7 +392,11 @@ const translations = {
     followTikTok: "SEGUIR TIKTOK ↗",
 
     establishedShort: "EST.",
-    footer: "© 2019 — 2026 LMM"
+    footer: "© 2019 — 2026 LMM",
+
+    statsFor: "ESTADÍSTICAS DEL JUGADOR",
+    statsClose: "Cerrar estadísticas",
+    statsUnavailable: "Estadísticas próximamente"
   }
 };
 
@@ -430,11 +438,15 @@ function useReveal() {
 
 function App() {
   const memberStats = {
-  Zerx: zerxStats,
-  shinobi: shinobiStats,
-  indra: indraStats,
-};
-const [selectedMember, setSelectedMember] = useState(null);
+    Zerx: zerxStats,
+    shinobi: shinobiStats,
+    indra: indraStats
+  };
+
+  const [selectedMember, setSelectedMember] = useState(null);
+  const statsCloseButtonRef = useRef(null);
+  const statsPreviouslyFocusedRef = useRef(null);
+
   const [language, setLanguage] = useState(() => {
     try {
       const savedLanguage = window.localStorage.getItem("lmm-language");
@@ -470,6 +482,23 @@ const [selectedMember, setSelectedMember] = useState(null);
     document.documentElement.lang = language;
   }, [language]);
 
+  const hasStatsForSelected =
+    !!selectedMember && !!memberStats[selectedMember];
+
+  const closeStatsPopup = () => setSelectedMember(null);
+
+  const handleMemberClick = (member) => {
+    // Members without a stats image are still clickable; no popup, no error.
+    if (!memberStats[member]) return;
+
+    statsPreviouslyFocusedRef.current =
+      document.activeElement instanceof HTMLElement
+        ? document.activeElement
+        : null;
+
+    setSelectedMember(member);
+  };
+
   useEffect(() => {
     const handleOutsideClick = (event) => {
       if (
@@ -484,6 +513,7 @@ const [selectedMember, setSelectedMember] = useState(null);
       if (event.key === "Escape") {
         setLanguageOpen(false);
         setMenuOpen(false);
+        setSelectedMember(null);
       }
     };
 
@@ -496,14 +526,25 @@ const [selectedMember, setSelectedMember] = useState(null);
     };
   }, []);
 
-  // Lock body scroll while the mobile menu is open.
+  // Lock body scroll while the mobile menu OR the stats popup is open.
   useEffect(() => {
-    document.body.style.overflow = menuOpen ? "hidden" : "";
+    document.body.style.overflow =
+      menuOpen || hasStatsForSelected ? "hidden" : "";
 
     return () => {
       document.body.style.overflow = "";
     };
-  }, [menuOpen]);
+  }, [menuOpen, hasStatsForSelected]);
+
+  // Move focus into the popup when it opens, and restore focus on close.
+  useEffect(() => {
+    if (hasStatsForSelected) {
+      statsCloseButtonRef.current?.focus();
+    } else if (statsPreviouslyFocusedRef.current) {
+      statsPreviouslyFocusedRef.current.focus();
+      statsPreviouslyFocusedRef.current = null;
+    }
+  }, [hasStatsForSelected]);
 
   const legacyReveal = useReveal();
   const commandReveal = useReveal();
@@ -524,8 +565,8 @@ const [selectedMember, setSelectedMember] = useState(null);
   ];
 
   return (
-  <div className="site">
-    <Analytics />
+    <div className="site">
+      <Analytics />
       {/* NAVBAR */}
       <header className="navbar">
         <a href="#home" className="brand">
@@ -848,43 +889,85 @@ const [selectedMember, setSelectedMember] = useState(null);
         </div>
 
         <div className="roster-grid reveal" ref={rosterGridReveal}>
-          {members.map((member, index) => (
-            <div
-  className="player"
-  key={member}
-  onClick={() => setSelectedMember(member)}
->
-              <span className="player-number">
-                {String(index + 1).padStart(2, "0")}
-              </span>
+          {members.map((member, index) => {
+            const isClickable = !!memberStats[member];
 
-              <strong>{member}</strong>
+            return (
+              <div
+                className={`player ${
+                  isClickable ? "player-has-stats" : ""
+                }`}
+                key={member}
+                onClick={() => handleMemberClick(member)}
+                role={isClickable ? "button" : undefined}
+                tabIndex={isClickable ? 0 : undefined}
+                onKeyDown={
+                  isClickable
+                    ? (event) => {
+                        if (event.key === "Enter" || event.key === " ") {
+                          event.preventDefault();
+                          handleMemberClick(member);
+                        }
+                      }
+                    : undefined
+                }
+                aria-haspopup={isClickable ? "dialog" : undefined}
+              >
+                <span className="player-number">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
 
-              <span className="player-arrow">↗</span>
-            </div>
-          ))}
+                <strong>{member}</strong>
+
+                <span className="player-arrow">↗</span>
+              </div>
+            );
+          })}
         </div>
       </section>
 
-{selectedMember && memberStats[selectedMember] && (
-  <div className="stats-popup">
-    <div className="stats-popup-content">
-      <button
-        className="stats-popup-close"
-        onClick={() => setSelectedMember(null)}
-      >
-        ×
-      </button>
+      {/* MEMBER STATS POPUP */}
+      {hasStatsForSelected && (
+        <div
+          className="stats-popup"
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) {
+              closeStatsPopup();
+            }
+          }}
+        >
+          <div
+            className="stats-popup-content"
+            role="dialog"
+            aria-modal="true"
+            aria-label={`${selectedMember} — ${t.statsFor}`}
+          >
+            <div className="stats-popup-header">
+              <span className="stats-popup-eyebrow">{t.statsFor}</span>
+              <h3>{selectedMember}</h3>
+            </div>
 
-      <img
-        src={memberStats[selectedMember]}
-        alt={`${selectedMember} stats`}
-      />
-    </div>
-  </div>
-)}
+            <button
+              type="button"
+              className="stats-popup-close"
+              onClick={closeStatsPopup}
+              aria-label={t.statsClose}
+              ref={statsCloseButtonRef}
+            >
+              ×
+            </button>
 
-{/* WAR ROOM */}
+            <div className="stats-popup-image-wrap">
+              <img
+                src={memberStats[selectedMember]}
+                alt={`${selectedMember} stats`}
+              />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* WAR ROOM */}
       <section className="wars" id="wars">
         <div className="wars-header reveal" ref={warsReveal}>
           <div>
