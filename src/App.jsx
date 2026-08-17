@@ -442,7 +442,7 @@ function App() {
     Zerx: zerxStats,
     shinobi: shinobiStats,
     indra: indraStats,
-    Bunny: bunnyStats
+    Bunny: zerxStats
   };
 
   const [selectedMember, setSelectedMember] = useState(null);
