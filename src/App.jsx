@@ -8,6 +8,7 @@ import indraStats from "./assets/indra-stats.jpeg";
 import bunnyStats from "./assets/bunny-stats.jpeg";
 import shadowStats from "./assets/shadow-stats.jpeg";
 import joseStats from "./assets/jose-stats.jpeg";
+import loboStats from "./assets/lobo-stats.jpeg";
 
 const members = [
   "CHEMA",
@@ -447,7 +448,8 @@ function App() {
     indra: indraStats,
     Bunny: bunnyStats,
     Shadow: shadowStats,
-    Jose: joseStats
+    Jose: joseStats,
+    LOBO: loboStats
   };
 
   const [selectedMember, setSelectedMember] = useState(null);
@@ -689,7 +691,7 @@ function App() {
           </div>
 
           <a
-            href="https://discord.gg/QYBgSgBM"
+            href="https://discord.gg/Vf4F3bneB"
             target="_blank"
             rel="noreferrer"
             className="join-top"
