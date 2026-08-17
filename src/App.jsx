@@ -583,7 +583,7 @@ function App() {
       {/* NAVBAR */}
       <header className="navbar">
         <a href="#home" className="brand">
-            <img src={lmmLogo} alt="LMM Logo" className="brand-mark" />
+       <img src={lmmLogo} alt="LMM Logo" className="brand-mark" />
           <div>
             <strong>LMM</strong>
               <span>LEGENDS OF MINIMILITIA</span>
