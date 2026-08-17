@@ -283,6 +283,7 @@ const translations = {
 
     discord: "JOIN DISCORD ↗",
     followTikTok: "FOLLOW TIKTOK ↗",
+    youtube: "SUBSCRIBE ON YOUTUBE ↗",
 
     establishedShort: "EST.",
     footer: "© 2019 — 2026 LMM",
@@ -393,8 +394,9 @@ const translations = {
     communityDescription:
       "Conecta con LMM, sigue nuestras partidas y forma parte de la comunidad.",
 
-    discord: "UNIRSE A DISCORD ↗",
-    followTikTok: "SEGUIR TIKTOK ↗",
+       discord: "UNIRSE A DISCORD ↗",
+       followTikTok: "SEGUIR TIKTOK ↗",
+      youtube: "SUSCRÍBETE EN YOUTUBE ↗",
 
     establishedShort: "EST.",
     footer: "© 2019 — 2026 LMM",
@@ -1124,6 +1126,16 @@ function App() {
             >
               {t.followTikTok}
             </a>
+
+            <a
+              href="https://youtube.com/@lmmoficial"
+              target="_blank"
+              rel="noreferrer"
+              className="community-btn dark"
+            >
+              {t.youtube}
+            </a>
+
           </div>
         </div>
       </section>
