@@ -5,6 +5,7 @@ import "./App.css";
 import zerxStats from "./assets/zerx-stats.jpeg";
 import shinobiStats from "./assets/shinobi-stats.jpeg";
 import indraStats from "./assets/indra-stats.jpeg";
+import bunnyStats from "./assets/bunny-stats.jpeg";
 
 const members = [
   "CHEMA",
@@ -440,7 +441,8 @@ function App() {
   const memberStats = {
     Zerx: zerxStats,
     shinobi: shinobiStats,
-    indra: indraStats
+    indra: indraStats,
+    bunny: bunnyStats
   };
 
   const [selectedMember, setSelectedMember] = useState(null);
