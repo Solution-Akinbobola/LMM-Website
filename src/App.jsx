@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { Analytics } from "@vercel/analytics/react";
 import "./App.css";
 
 const members = [
@@ -514,7 +515,8 @@ function App() {
   ];
 
   return (
-    <div className="site">
+  <div className="site">
+    <Analytics />
       {/* NAVBAR */}
       <header className="navbar">
         <a href="#home" className="brand">
