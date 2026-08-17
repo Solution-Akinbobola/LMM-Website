@@ -7,6 +7,7 @@ const members = [
   "OVERSKY",
   "LOBO",
   "Alonso",
+  "Zerx",
   "GHOST",
   "VICENZO",
   "PPCDSAPP",
@@ -40,10 +41,8 @@ const members = [
   "Lando",
   "savit",
   "indra",
-  "obito",
-  "Zerx"
+  "obito"
 ];
-
 const leaders = [
   { name: "LOBO", role: "leader", number: "01" },
   { name: "OVER", role: "coLeader", number: "02" },
