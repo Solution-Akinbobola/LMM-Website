@@ -1,3 +1,15 @@
+import logo from "./assets/logo.png";
+
+function App() {
+  return (
+    <div>
+      <img src={logo} alt="LMM Logo" />
+    </div>
+  );
+}
+
+export default App;
+
 import { useEffect, useRef, useState } from "react";
 import { Analytics } from "@vercel/analytics/react";
 import "./App.css";
@@ -730,7 +742,7 @@ function App() {
           ))}
 
           <a
-            href="https://discord.gg/QYBgSgBM"
+            href="https://discord.gg/Vf4F3bneB"
             target="_blank"
             rel="noreferrer"
             className="join-top"
