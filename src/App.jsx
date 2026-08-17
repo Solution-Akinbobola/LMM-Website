@@ -2,6 +2,10 @@ import { useEffect, useRef, useState } from "react";
 import { Analytics } from "@vercel/analytics/react";
 import "./App.css";
 
+import zerxStats from "./assets/zerx-stats.jpeg";
+import shinobiStats from "./assets/shinobi-stats.jpeg";
+import indraStats from "./assets/indra-stats.jpeg";
+
 const members = [
   "CHEMA",
   "OVERSKY",
@@ -425,6 +429,12 @@ function useReveal() {
 }
 
 function App() {
+  const memberStats = {
+  Zerx: zerxStats,
+  shinobi: shinobiStats,
+  indra: indraStats,
+};
+const [selectedMember, setSelectedMember] = useState(null);
   const [language, setLanguage] = useState(() => {
     try {
       const savedLanguage = window.localStorage.getItem("lmm-language");
@@ -839,7 +849,11 @@ function App() {
 
         <div className="roster-grid reveal" ref={rosterGridReveal}>
           {members.map((member, index) => (
-            <div className="player" key={member}>
+            <div
+  className="player"
+  key={member}
+  onClick={() => setSelectedMember(member)}
+>
               <span className="player-number">
                 {String(index + 1).padStart(2, "0")}
               </span>
@@ -852,7 +866,25 @@ function App() {
         </div>
       </section>
 
-      {/* WAR ROOM */}
+{selectedMember && memberStats[selectedMember] && (
+  <div className="stats-popup">
+    <div className="stats-popup-content">
+      <button
+        className="stats-popup-close"
+        onClick={() => setSelectedMember(null)}
+      >
+        ×
+      </button>
+
+      <img
+        src={memberStats[selectedMember]}
+        alt={`${selectedMember} stats`}
+      />
+    </div>
+  </div>
+)}
+
+{/* WAR ROOM */}
       <section className="wars" id="wars">
         <div className="wars-header reveal" ref={warsReveal}>
           <div>
