@@ -1,0 +1,765 @@
+/* =========================================================
+   LMM PLAYER PROFILE
+   ========================================================= */
+
+.player-profile-overlay {
+  position: fixed;
+  z-index: 3000;
+  inset: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 32px;
+
+  background: rgba(0, 0, 0, 0.86);
+
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
+  animation: lmmProfileOverlayIn 0.22s ease both;
+}
+
+@keyframes lmmProfileOverlayIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+
+/* =========================================================
+   MAIN PROFILE WINDOW
+   ========================================================= */
+
+.player-profile {
+  position: relative;
+
+  display: grid;
+
+  width: min(1180px, 94vw);
+  height: min(720px, 88vh);
+
+  grid-template-columns: 52% 48%;
+
+  overflow: hidden;
+
+  border: 1px solid rgba(255, 208, 0, 0.38);
+
+  background:
+    linear-gradient(
+      135deg,
+      #151515 0%,
+      #0c0c0c 50%,
+      #070707 100%
+    );
+
+  box-shadow:
+    0 40px 100px rgba(0, 0, 0, 0.75),
+    0 0 80px rgba(255, 208, 0, 0.06);
+
+  animation:
+    lmmProfileWindowIn
+    0.3s
+    cubic-bezier(0.22, 1, 0.36, 1)
+    both;
+}
+
+@keyframes lmmProfileWindowIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+
+/* =========================================================
+   CLOSE BUTTON
+   ========================================================= */
+
+.player-profile-close {
+  position: absolute;
+
+  z-index: 50;
+
+  top: 18px;
+  right: 18px;
+
+  display: grid;
+
+  width: 44px;
+  height: 44px;
+
+  place-items: center;
+
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 50%;
+
+  background: rgba(0, 0, 0, 0.55);
+
+  color: #f4f4f4;
+
+  font-size: 23px;
+  line-height: 1;
+
+  transition:
+    border-color 0.2s ease,
+    color 0.2s ease,
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.player-profile-close:hover {
+  border-color: #ffd000;
+
+  background: rgba(255, 208, 0, 0.12);
+
+  color: #ffd000;
+
+  transform: rotate(90deg);
+}
+
+
+/* =========================================================
+   LEFT SIDE
+   ========================================================= */
+
+.player-profile-visual {
+  position: relative;
+
+  display: flex;
+
+  min-width: 0;
+
+  flex-direction: column;
+
+  padding: 30px;
+
+  border-right: 1px solid #292929;
+
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(255, 208, 0, 0.07),
+      transparent 58%
+    ),
+    #080808;
+}
+
+
+/* TOP LABEL */
+
+.player-profile-visual-top {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  margin-bottom: 14px;
+
+  color: #555;
+
+  font-size: 8px;
+
+  font-weight: 900;
+
+  letter-spacing: 2.5px;
+}
+
+.player-profile-visual-top span:first-child {
+  color: #ffd000;
+}
+
+
+/* IMAGE CONTAINER */
+
+.player-profile-image {
+  position: relative;
+
+  display: flex;
+
+  min-height: 0;
+
+  flex: 1;
+
+  align-items: center;
+
+  justify-content: center;
+
+  overflow: hidden;
+
+  border: 1px solid #292929;
+
+  background:
+    linear-gradient(
+      145deg,
+      #111111,
+      #070707
+    );
+}
+
+
+/* Decorative corners */
+
+.player-profile-image::before,
+.player-profile-image::after {
+  position: absolute;
+
+  z-index: 3;
+
+  width: 28px;
+  height: 28px;
+
+  border-color: rgba(255, 208, 0, 0.5);
+
+  content: "";
+
+  pointer-events: none;
+}
+
+.player-profile-image::before {
+  top: 12px;
+  left: 12px;
+
+  border-top: 1px solid;
+  border-left: 1px solid;
+}
+
+.player-profile-image::after {
+  right: 12px;
+  bottom: 12px;
+
+  border-right: 1px solid;
+  border-bottom: 1px solid;
+}
+
+
+/* ACTUAL IMAGE */
+
+.player-profile-image img {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  max-width: 100%;
+  max-height: 100%;
+
+  object-fit: contain;
+}
+
+
+/* EMPTY STATE */
+
+.player-profile-no-image {
+  display: grid;
+
+  width: 100%;
+  height: 100%;
+
+  place-items: center;
+
+  color: #444;
+
+  font-size: 9px;
+
+  font-weight: 900;
+
+  letter-spacing: 3px;
+}
+
+
+/* LEFT FOOTER */
+
+.player-profile-visual-bottom {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  padding-top: 14px;
+
+  color: #444;
+
+  font-size: 7px;
+
+  font-weight: 900;
+
+  letter-spacing: 2px;
+}
+
+.player-profile-visual-bottom span:last-child {
+  color: #ffd000;
+}
+
+
+/* =========================================================
+   RIGHT SIDE
+   ========================================================= */
+
+.player-profile-info {
+  display: flex;
+
+  min-width: 0;
+
+  flex-direction: column;
+
+  padding: 48px 42px 30px;
+
+  overflow: hidden;
+}
+
+
+/* HEADER */
+
+.player-profile-header {
+  padding-right: 55px;
+}
+
+.player-profile-kicker {
+  display: block;
+
+  color: #ffd000;
+
+  font-size: 9px;
+
+  font-weight: 900;
+
+  letter-spacing: 3px;
+}
+
+.player-profile-header h2 {
+  margin: 12px 0 0;
+
+  color: #f4f4f4;
+
+  font-family: "Barlow Condensed", sans-serif;
+
+  font-size: clamp(62px, 7vw, 100px);
+
+  font-weight: 900;
+
+  letter-spacing: -2px;
+
+  line-height: 0.78;
+
+  text-transform: uppercase;
+}
+
+.player-profile-header p {
+  margin: 14px 0 0;
+
+  color: #555;
+
+  font-size: 8px;
+
+  font-weight: 900;
+
+  letter-spacing: 2px;
+}
+
+
+/* =========================================================
+   IDENTITY GRID
+   ========================================================= */
+
+.player-profile-identity {
+  display: grid;
+
+  margin-top: 34px;
+
+  border-top: 1px solid #292929;
+  border-left: 1px solid #292929;
+
+  grid-template-columns: 1fr 1fr;
+}
+
+.player-profile-identity-item {
+  display: flex;
+
+  min-height: 70px;
+
+  flex-direction: column;
+
+  justify-content: center;
+
+  gap: 7px;
+
+  padding: 12px 15px;
+
+  border-right: 1px solid #292929;
+  border-bottom: 1px solid #292929;
+}
+
+.player-profile-identity-item span {
+  color: #555;
+
+  font-size: 7px;
+
+  font-weight: 900;
+
+  letter-spacing: 2px;
+}
+
+.player-profile-identity-item strong {
+  overflow: hidden;
+
+  color: #eee;
+
+  font-size: 10px;
+
+  font-weight: 900;
+
+  letter-spacing: 1px;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+}
+
+.player-profile-identity-item strong.is-highlight {
+  color: #ffd000;
+}
+
+
+/* =========================================================
+   PERFORMANCE
+   ========================================================= */
+
+.player-profile-performance {
+  margin-top: 28px;
+}
+
+.player-profile-section-title {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  margin-bottom: 11px;
+}
+
+.player-profile-section-title span {
+  color: #ffd000;
+
+  font-family: "Barlow Condensed", sans-serif;
+
+  font-size: 18px;
+
+  font-weight: 900;
+}
+
+.player-profile-section-title strong {
+  color: #ffd000;
+
+  font-size: 8px;
+
+  font-weight: 900;
+
+  letter-spacing: 2.5px;
+}
+
+
+/* STATS GRID */
+
+.player-profile-stats {
+  display: grid;
+
+  border-top: 1px solid #292929;
+  border-left: 1px solid #292929;
+
+  grid-template-columns: 1fr 1fr;
+}
+
+.pp-stat-row {
+  display: flex;
+
+  min-height: 57px;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 10px;
+
+  padding: 0 14px;
+
+  border-right: 1px solid #292929;
+  border-bottom: 1px solid #292929;
+}
+
+.pp-stat-row span {
+  color: #555;
+
+  font-size: 7px;
+
+  font-weight: 900;
+
+  letter-spacing: 1.2px;
+}
+
+.pp-stat-row strong {
+  color: #f4f4f4;
+
+  font-family: "Barlow Condensed", sans-serif;
+
+  font-size: 22px;
+
+  font-weight: 900;
+}
+
+
+/* NOTE */
+
+.player-profile-note {
+  margin: 12px 0 0;
+
+  color: #444;
+
+  font-size: 8px;
+
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   BOTTOM
+   ========================================================= */
+
+.player-profile-footer {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 15px;
+
+  margin-top: auto;
+
+  padding-top: 20px;
+
+  border-top: 1px solid #292929;
+
+  color: #444;
+
+  font-size: 7px;
+
+  font-weight: 900;
+
+  letter-spacing: 1.5px;
+}
+
+.player-profile-back {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 9px;
+
+  min-height: 38px;
+
+  padding: 0 14px;
+
+  border: 1px solid #333;
+
+  color: #777;
+
+  font-size: 8px;
+
+  font-weight: 900;
+
+  letter-spacing: 1px;
+
+  transition:
+    border-color 0.2s ease,
+    color 0.2s ease,
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.player-profile-back:hover {
+  border-color: #ffd000;
+
+  background: rgba(255, 208, 0, 0.08);
+
+  color: #ffd000;
+
+  transform: translateX(-2px);
+}
+
+.player-profile-back span {
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 850px) {
+  .player-profile-overlay {
+    padding: 18px;
+  }
+
+  .player-profile {
+    width: 96vw;
+
+    height: 90vh;
+
+    grid-template-columns: 48% 52%;
+  }
+
+  .player-profile-visual {
+    padding: 22px;
+  }
+
+  .player-profile-info {
+    padding: 38px 28px 24px;
+  }
+
+  .player-profile-header h2 {
+    font-size: 65px;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 680px) {
+  .player-profile-overlay {
+    padding: 0;
+  }
+
+  .player-profile {
+    width: 100vw;
+
+    height: 100vh;
+
+    max-height: 100vh;
+
+    grid-template-columns: 1fr;
+
+    grid-template-rows: 42% 58%;
+
+    border-right: 0;
+    border-left: 0;
+    border-bottom: 0;
+  }
+
+  .player-profile-visual {
+    min-height: 0;
+
+    padding: 16px;
+
+    border-right: 0;
+
+    border-bottom: 1px solid #292929;
+  }
+
+  .player-profile-info {
+    min-height: 0;
+
+    padding: 25px 18px 20px;
+
+    overflow-y: auto;
+  }
+
+  .player-profile-header h2 {
+    font-size: 54px;
+  }
+
+  .player-profile-identity {
+    margin-top: 22px;
+  }
+
+  .player-profile-performance {
+    margin-top: 22px;
+  }
+
+  .player-profile-footer {
+    margin-top: 25px;
+  }
+}
+
+
+/* =========================================================
+   SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 430px) {
+  .player-profile {
+    grid-template-rows: 38% 62%;
+  }
+
+  .player-profile-visual {
+    padding: 12px;
+  }
+
+  .player-profile-info {
+    padding: 22px 14px 16px;
+  }
+
+  .player-profile-header h2 {
+    font-size: 47px;
+  }
+
+  .player-profile-identity-item {
+    min-height: 58px;
+
+    padding: 10px 11px;
+  }
+
+  .player-profile-identity-item strong {
+    font-size: 9px;
+  }
+
+  .pp-stat-row {
+    min-height: 50px;
+
+    padding: 0 10px;
+  }
+
+  .pp-stat-row span {
+    font-size: 6px;
+  }
+
+  .player-profile-footer > span {
+    display: none;
+  }
+
+  .player-profile-footer {
+    justify-content: flex-end;
+  }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .player-profile-overlay,
+  .player-profile {
+    animation: none;
+  }
+
+  .player-profile-close,
+  .player-profile-back {
+    transition: none;
+  }
+}

@@ -11,49 +11,25 @@ import bunnyStats from "./assets/bunny-stats.jpeg";
 import shadowStats from "./assets/shadow-stats.jpeg";
 import joseStats from "./assets/jose-stats.jpeg";
 import loboStats from "./assets/lobo-stats.jpeg";
+import velozxin from "./assets/velozxin-stats.jpg";
+import unstoppable from "./assets/unstoppable-stats.jpg";
 
-const members = [
-  "CHEMA",
-  "OVERSKY",
-  "LOBO",
-  "Alonso",
-  "Zerx",
-  "GHOST",
-  "VICENZO",
-  "PPCDSAPP",
-  "LEIN",
-  "tekato",
-  "KEYSI",
-  "KINDEL",
-  "DRAK",
-  "AARON",
-  "KNIGHT",
-  "HERTRIC",
-  "JAMES",
-  "Focus",
-  "Ryze",
-  "Adiel",
-  "Shadow",
-  "Daniel",
-  "Jeremy",
-  "shinobi",
-  "Dazai",
-  "Archer",
-  "Kassette",
-  "Krept",
-  "Bunny",
-  "wos",
-  "sekhon",
-  "Treak",
-  "triston",
-  "raizo",
-  "itadori",
-  "Lando",
-  "savit",
-  "indra",
-  "obito",
-  "Jose"
-];
+import { roster } from "./data/rosterData";
+import {
+  liveMatch,
+  nextMatch,
+  connectionStatus,
+  streamOptions
+} from "./data/liveMatchData";
+import { matchHistory } from "./data/matchHistoryData";
+
+import LiveMatchCenter from "./components/LiveMatchCenter";
+import MatchHistory from "./components/MatchHistory";
+import Roster from "./components/Roster";
+import Rankings from "./components/Rankings";
+import PlayerProfileModal from "./components/PlayerProfileModal";
+import Footer from "./components/Footer";
+
 const leaders = [
   { name: "LOBO", role: "leader", number: "01" },
   { name: "OVER", role: "coLeader", number: "02" },
@@ -63,122 +39,18 @@ const leaders = [
 ];
 
 const victories = [
-  "CL",
-  "IND",
-  "HCL",
-  "TL",
-  "LNZ",
-  "LZR",
-  "L2K",
-  "BELLOS",
-  "BR2",
-  "NICA",
-  "GG",
-  "MIL",
-  "HL",
-  "FL",
-  "JDM",
-  "HQ",
-  "IL",
-  "V",
-  "F2",
-  "NS",
-  "TBL",
-  "TDW",
-  "LD",
-  "V5",
-  "DA",
-  "NG",
-  "SVD",
-  "SL",
-  "USA",
-  "NN",
-  "MVP",
-  "HT",
-  "BLK",
-  "USARE",
-  "XP",
-  "P+G",
-  "FAVOUR",
-  "IG",
-  "FC",
-  "EXP",
-  "DL",
-  "RKG",
-  "FRS",
-  "ROLO",
-  "TSG",
-  "TGM",
-  "BGM",
-  "2R",
-  "RPG",
-  "RBL",
-  "OT",
-  "OP",
-  "SNG",
-  "PGS",
-  "TM",
-  "BOD",
-  "CLC",
-  "SF",
-  "7G",
-  "BD",
-  "USSR",
-  "6S",
-  "ES",
-  "LOUD",
-  "2T",
-  "GRIZZI",
-  "UCW",
-  "AF",
-  "PM",
-  "BNL",
-  "U+T",
-  "PNL",
-  "ZXP",
-  "LP",
-  "LDN",
-  "AD",
-  "SP1",
-  "APS",
-  "JP",
-  "PWR",
-  "LGN",
-  "RM",
-  "TSR",
-  "TXS",
-  "PRIME",
-  "PLN",
-  "RWD",
-  "DB",
-  "CA",
-  "LNM",
-  "7N",
-  "ZK",
-  "PMS",
-  "SAO",
-  "TP",
-  "V4",
-  "GD",
-  "TDK",
-  "EXT",
-  "BRICS",
-  "LATM",
-  "CID",
-  "BTC",
-  "SC",
-  "MC502",
-  "CNG",
-  "UV",
-  "MW",
-  "TC",
-  "GMT",
-  "LGL",
-  "CLM",
-  "LF",
-  "RR",
-  "DW",
-  "MD"
+  "CL", "IND", "HCL", "TL", "LNZ", "LZR", "L2K", "BELLOS", "BR2", "NICA",
+  "GG", "MIL", "HL", "FL", "JDM", "HQ", "IL", "V", "F2", "NS", "TBL",
+  "TDW", "LD", "V5", "DA", "NG", "SVD", "SL", "USA", "NN", "MVP", "HT",
+  "BLK", "USARE", "XP", "P+G", "FAVOUR", "IG", "FC", "EXP", "DL", "RKG",
+  "FRS", "ROLO", "TSG", "TGM", "BGM", "2R", "RPG", "RBL", "OT", "OP",
+  "SNG", "PGS", "TM", "BOD", "CLC", "SF", "7G", "BD", "USSR", "6S", "ES",
+  "LOUD", "2T", "GRIZZI", "UCW", "AF", "PM", "BNL", "U+T", "PNL", "ZXP",
+  "LP", "LDN", "AD", "SP1", "APS", "JP", "PWR", "LGN", "RM", "TSR", "TXS",
+  "PRIME", "PLN", "RWD", "DB", "CA", "LNM", "7N", "ZK", "PMS", "SAO",
+  "TP", "V4", "GD", "TDK", "EXT", "BRICS", "LATM", "CID", "BTC", "SC",
+  "MC502", "CNG", "UV", "MW", "TC", "GMT", "LGL", "CLM", "LF", "RR",
+  "DW", "MD"
 ];
 
 const translations = {
@@ -191,6 +63,7 @@ const translations = {
     legacy: "LEGACY",
     roster: "ROSTER",
     wars: "WARS",
+    rankings: "RANKINGS",
     live: "LIVE",
     join: "JOIN LMM",
 
@@ -292,7 +165,137 @@ const translations = {
 
     statsFor: "PLAYER STATS",
     statsClose: "Close stats",
-    statsUnavailable: "Stats coming soon"
+    statsUnavailable: "Stats coming soon",
+
+    // LIVE MATCH CENTER
+    lcConnectionConnected: "LIVE CONNECTION",
+    lcConnectionReconnecting: "RECONNECTING...",
+    lcConnectionOffline: "OFFLINE",
+    lcLastUpdated: "UPDATED",
+    lcCurrentMatch: "CURRENT MATCH",
+    lcStatusLive: "LIVE",
+    lcMvp: "MVP",
+    lcMap: "MAP",
+    lcStartTime: "START TIME",
+    lcMatchType: "MATCH TYPE",
+    lcWatchMatch: "WATCH MATCH",
+    lcWatchOn: "WATCH ON",
+    lcStreamSoon: "STREAM LINK COMING SOON",
+    lcNoLiveTitle: "NO LIVE MATCH CURRENTLY",
+    lcNoLiveDesc:
+      "LMM isn't in an official match right now. Check back soon, or follow us below to catch the next one live.",
+    lcNextUp: "NEXT UP",
+    lcNoNextTitle: "NO UPCOMING MATCH SCHEDULED",
+    lcNoNextDesc: "New fixtures will appear here as soon as they're confirmed.",
+    lcTournament: "TOURNAMENT",
+    "lcCountdown_days": "DAYS",
+    "lcCountdown_hours": "HRS",
+    "lcCountdown_minutes": "MIN",
+    "lcCountdown_seconds": "SEC",
+
+    // MATCH HISTORY / WARS
+    mhArchiveTitle: "MATCH ARCHIVE",
+    mhFilterLabel: "FILTER RESULTS",
+    mhFilterAll: "ALL",
+    mhFilterWin: "WINS",
+    mhFilterLoss: "LOSSES",
+    mhFilterDraw: "DRAWS",
+    mhNoMatches: "NO MATCH HISTORY AVAILABLE YET",
+    mhNoMatchesDesc:
+      "Recorded matches will appear here once LMM's match archive is connected.",
+
+    // ROSTER
+    rosSearchPlaceholder: "SEARCH ROSTER...",
+    rosFilterRole: "ROLE",
+    rosFilterStatus: "STATUS",
+    rosAll: "ALL",
+    rosActive: "ACTIVE",
+    rosInactive: "INACTIVE",
+    rosMember: "MEMBER",
+    rosNoResults: "NO PLAYERS MATCH YOUR SEARCH.",
+
+    // PLAYER PROFILE
+    ppStatsHeading: "PERFORMANCE STATS",
+    ppMatchesPlayed: "MATCHES PLAYED",
+    ppWins: "WINS",
+    ppLosses: "LOSSES",
+    ppWinRate: "WIN RATE",
+    ppKd: "K/D",
+    ppMvpAwards: "MVP AWARDS",
+    ppStatsPending:
+      "Detailed statistics haven't been connected yet — this will populate once LMM's stats system goes live.",
+
+    // RANKINGS (leaderboards / records / achievements)
+    progression: "PROGRESSION",
+    rankTitle1: "TRACK THE",
+    rankTitle2: "CLIMB.",
+    rankDescription:
+      "Leaderboards, clan records and achievements — the numbers behind the LMM name.",
+
+    rkTabLeaderboards: "LEADERBOARDS",
+    rkTabRecords: "RECORDS",
+    rkTabAchievements: "ACHIEVEMENTS",
+
+    lbWeekly: "WEEKLY",
+    lbMonthly: "MONTHLY",
+    lbSeason: "SEASON",
+    lbAllTime: "ALL TIME",
+
+    lbCatOverall: "OVERALL",
+    lbCatWins: "WINS",
+    lbCatWinRate: "WIN RATE",
+    lbCatMvps: "MVPS",
+    lbCatKd: "K/D",
+    lbCatMatches: "MATCHES PLAYED",
+    lbCatRecent: "RECENT FORM",
+
+    lbRank: "RANK",
+    lbPlayer: "PLAYER",
+    lbValue: "VALUE",
+    lbEmptyTitle: "LEADERBOARD COMING SOON",
+    lbEmptyDesc:
+      "Rankings will populate once real match and player statistics are tracked.",
+
+    rcHolder: "HOLDER",
+    rcValue: "VALUE",
+    rcPendingNote:
+      "Clan records will populate once real match and player statistics are tracked.",
+    rcMostWins: "MOST WINS",
+    rcMostMvps: "MOST MVPS",
+    rcLongestStreak: "LONGEST WIN STREAK",
+    rcMostMatches: "MOST MATCHES PLAYED",
+    rcBestWinRate: "BEST WIN RATE",
+    rcBiggestVictory: "BIGGEST VICTORY",
+    rcLongestEra: "LONGEST LMM ERA",
+    rcMostTournamentWins: "MOST TOURNAMENT WINS",
+
+    acEarnedBy: "EARNED BY",
+    acNoneYet: "NOT YET AWARDED",
+    acCatalogNote:
+      "Badges are awarded from real clan statistics as they're tracked.",
+    acFirstVictory: "FIRST VICTORY",
+    acFirstVictoryDesc: "Earned on a player's first recorded win with LMM.",
+    acTenWins: "10 WINS",
+    acTenWinsDesc: "Awarded after 10 recorded wins.",
+    acFiftyWins: "50 WINS",
+    acFiftyWinsDesc: "Awarded after 50 recorded wins.",
+    acMvp: "MVP",
+    acMvpDesc: "Awarded for being named MVP of a match.",
+    acVeteran: "VETERAN",
+    acVeteranDesc: "Awarded for long-standing, active LMM membership.",
+    acClanLegend: "CLAN LEGEND",
+    acClanLegendDesc: "Reserved for LMM's most iconic players.",
+    acTournamentChampion: "TOURNAMENT CHAMPION",
+    acTournamentChampionDesc:
+      "Awarded for winning an official tournament with LMM.",
+    acUndefeatedStreak: "UNDEFEATED STREAK",
+    acUndefeatedStreakDesc: "Awarded for an extended run without a loss.",
+
+    // FOOTER
+    ftDescription:
+      "The official digital home of LMM — Legends of MiniMilitia. A competitive Mini Militia clan since 2019.",
+    ftNav: "NAVIGATION",
+    ftConnect: "CONNECT"
   },
 
   es: {
@@ -304,6 +307,7 @@ const translations = {
     legacy: "LEGADO",
     roster: "PLANTILLA",
     wars: "GUERRAS",
+    rankings: "CLASIFICACIÓN",
     live: "EN VIVO",
     join: "UNIRSE A LMM",
 
@@ -396,16 +400,146 @@ const translations = {
     communityDescription:
       "Conecta con LMM, sigue nuestras partidas y forma parte de la comunidad.",
 
-       discord: "UNIRSE A DISCORD ↗",
-       followTikTok: "SEGUIR TIKTOK ↗",
-      youtube: "SUSCRÍBETE EN YOUTUBE ↗",
+    discord: "UNIRSE A DISCORD ↗",
+    followTikTok: "SEGUIR TIKTOK ↗",
+    youtube: "SUSCRÍBETE EN YOUTUBE ↗",
 
     establishedShort: "EST.",
     footer: "© 2019 — 2026 LMM",
 
     statsFor: "ESTADÍSTICAS DEL JUGADOR",
     statsClose: "Cerrar estadísticas",
-    statsUnavailable: "Estadísticas próximamente"
+    statsUnavailable: "Estadísticas próximamente",
+
+    // LIVE MATCH CENTER
+    lcConnectionConnected: "CONEXIÓN EN VIVO",
+    lcConnectionReconnecting: "RECONECTANDO...",
+    lcConnectionOffline: "SIN CONEXIÓN",
+    lcLastUpdated: "ACTUALIZADO",
+    lcCurrentMatch: "PARTIDA ACTUAL",
+    lcStatusLive: "EN VIVO",
+    lcMvp: "MVP",
+    lcMap: "MAPA",
+    lcStartTime: "HORA DE INICIO",
+    lcMatchType: "TIPO DE PARTIDA",
+    lcWatchMatch: "VER PARTIDA",
+    lcWatchOn: "VER EN",
+    lcStreamSoon: "ENLACE DE TRANSMISIÓN PRÓXIMAMENTE",
+    lcNoLiveTitle: "NO HAY PARTIDA EN VIVO ACTUALMENTE",
+    lcNoLiveDesc:
+      "LMM no está en una partida oficial en este momento. Vuelve pronto o síguenos abajo para ver la próxima en vivo.",
+    lcNextUp: "PRÓXIMA PARTIDA",
+    lcNoNextTitle: "NO HAY PARTIDA PROGRAMADA",
+    lcNoNextDesc: "Las nuevas partidas aparecerán aquí en cuanto se confirmen.",
+    lcTournament: "TORNEO",
+    "lcCountdown_days": "DÍAS",
+    "lcCountdown_hours": "HRS",
+    "lcCountdown_minutes": "MIN",
+    "lcCountdown_seconds": "SEG",
+
+    // MATCH HISTORY / WARS
+    mhArchiveTitle: "ARCHIVO DE PARTIDAS",
+    mhFilterLabel: "FILTRAR RESULTADOS",
+    mhFilterAll: "TODAS",
+    mhFilterWin: "VICTORIAS",
+    mhFilterLoss: "DERROTAS",
+    mhFilterDraw: "EMPATES",
+    mhNoMatches: "AÚN NO HAY HISTORIAL DE PARTIDAS",
+    mhNoMatchesDesc:
+      "Las partidas registradas aparecerán aquí una vez conectado el archivo de LMM.",
+
+    // ROSTER
+    rosSearchPlaceholder: "BUSCAR EN LA PLANTILLA...",
+    rosFilterRole: "ROL",
+    rosFilterStatus: "ESTADO",
+    rosAll: "TODOS",
+    rosActive: "ACTIVO",
+    rosInactive: "INACTIVO",
+    rosMember: "MIEMBRO",
+    rosNoResults: "NINGÚN JUGADOR COINCIDE CON TU BÚSQUEDA.",
+
+    // PLAYER PROFILE
+    ppStatsHeading: "ESTADÍSTICAS DE RENDIMIENTO",
+    ppMatchesPlayed: "PARTIDAS JUGADAS",
+    ppWins: "VICTORIAS",
+    ppLosses: "DERROTAS",
+    ppWinRate: "% DE VICTORIAS",
+    ppKd: "K/D",
+    ppMvpAwards: "PREMIOS MVP",
+    ppStatsPending:
+      "Las estadísticas detalladas aún no están conectadas — se completarán cuando el sistema de estadísticas de LMM esté activo.",
+
+    // RANKINGS (leaderboards / records / achievements)
+    progression: "PROGRESIÓN",
+    rankTitle1: "SIGUE LA",
+    rankTitle2: "ASCENSIÓN.",
+    rankDescription:
+      "Clasificaciones, récords del clan y logros — los números detrás del nombre LMM.",
+
+    rkTabLeaderboards: "CLASIFICACIÓN",
+    rkTabRecords: "RÉCORDS",
+    rkTabAchievements: "LOGROS",
+
+    lbWeekly: "SEMANAL",
+    lbMonthly: "MENSUAL",
+    lbSeason: "TEMPORADA",
+    lbAllTime: "HISTÓRICO",
+
+    lbCatOverall: "GENERAL",
+    lbCatWins: "VICTORIAS",
+    lbCatWinRate: "% DE VICTORIAS",
+    lbCatMvps: "MVPS",
+    lbCatKd: "K/D",
+    lbCatMatches: "PARTIDAS JUGADAS",
+    lbCatRecent: "FORMA RECIENTE",
+
+    lbRank: "PUESTO",
+    lbPlayer: "JUGADOR",
+    lbValue: "VALOR",
+    lbEmptyTitle: "CLASIFICACIÓN PRÓXIMAMENTE",
+    lbEmptyDesc:
+      "La clasificación se completará cuando se registren estadísticas reales de partidas y jugadores.",
+
+    rcHolder: "POSEEDOR",
+    rcValue: "VALOR",
+    rcPendingNote:
+      "Los récords del clan se completarán cuando se registren estadísticas reales de partidas y jugadores.",
+    rcMostWins: "MÁS VICTORIAS",
+    rcMostMvps: "MÁS MVPS",
+    rcLongestStreak: "RACHA DE VICTORIAS MÁS LARGA",
+    rcMostMatches: "MÁS PARTIDAS JUGADAS",
+    rcBestWinRate: "MEJOR % DE VICTORIAS",
+    rcBiggestVictory: "VICTORIA MÁS GRANDE",
+    rcLongestEra: "ERA LMM MÁS LARGA",
+    rcMostTournamentWins: "MÁS TORNEOS GANADOS",
+
+    acEarnedBy: "OBTENIDO POR",
+    acNoneYet: "AÚN NO OTORGADO",
+    acCatalogNote:
+      "Las insignias se otorgan a partir de estadísticas reales del clan a medida que se registran.",
+    acFirstVictory: "PRIMERA VICTORIA",
+    acFirstVictoryDesc: "Se obtiene con la primera victoria registrada con LMM.",
+    acTenWins: "10 VICTORIAS",
+    acTenWinsDesc: "Otorgado tras 10 victorias registradas.",
+    acFiftyWins: "50 VICTORIAS",
+    acFiftyWinsDesc: "Otorgado tras 50 victorias registradas.",
+    acMvp: "MVP",
+    acMvpDesc: "Otorgado por ser nombrado MVP de una partida.",
+    acVeteran: "VETERANO",
+    acVeteranDesc: "Otorgado por membresía activa y prolongada en LMM.",
+    acClanLegend: "LEYENDA DEL CLAN",
+    acClanLegendDesc: "Reservado para los jugadores más icónicos de LMM.",
+    acTournamentChampion: "CAMPEÓN DE TORNEO",
+    acTournamentChampionDesc:
+      "Otorgado por ganar un torneo oficial con LMM.",
+    acUndefeatedStreak: "RACHA INVICTA",
+    acUndefeatedStreakDesc: "Otorgado por una racha prolongada sin derrotas.",
+
+    // FOOTER
+    ftDescription:
+      "La sede digital oficial de LMM — Legends of MiniMilitia. Un clan competitivo de Mini Militia desde 2019.",
+    ftNav: "NAVEGACIÓN",
+    ftConnect: "CONECTAR"
   }
 };
 
@@ -453,12 +587,12 @@ function App() {
     Bunny: bunnyStats,
     Shadow: shadowStats,
     Jose: joseStats,
-    LOBO: loboStats
+    LOBO: loboStats,
+    velozxin: velozxin,
+    unstoppable: unstoppable
   };
 
-  const [selectedMember, setSelectedMember] = useState(null);
-  const statsCloseButtonRef = useRef(null);
-  const statsPreviouslyFocusedRef = useRef(null);
+  const [selectedPlayer, setSelectedPlayer] = useState(null);
 
   const [language, setLanguage] = useState(() => {
     try {
@@ -495,22 +629,7 @@ function App() {
     document.documentElement.lang = language;
   }, [language]);
 
-  const hasStatsForSelected =
-    !!selectedMember && !!memberStats[selectedMember];
-
-  const closeStatsPopup = () => setSelectedMember(null);
-
-  const handleMemberClick = (member) => {
-    // Members without a stats image are still clickable; no popup, no error.
-    if (!memberStats[member]) return;
-
-    statsPreviouslyFocusedRef.current =
-      document.activeElement instanceof HTMLElement
-        ? document.activeElement
-        : null;
-
-    setSelectedMember(member);
-  };
+  const closeProfile = () => setSelectedPlayer(null);
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
@@ -526,7 +645,7 @@ function App() {
       if (event.key === "Escape") {
         setLanguageOpen(false);
         setMenuOpen(false);
-        setSelectedMember(null);
+        setSelectedPlayer(null);
       }
     };
 
@@ -539,25 +658,15 @@ function App() {
     };
   }, []);
 
-  // Lock body scroll while the mobile menu OR the stats popup is open.
+  // Lock body scroll while the mobile menu OR the player profile is open.
   useEffect(() => {
     document.body.style.overflow =
-      menuOpen || hasStatsForSelected ? "hidden" : "";
+      menuOpen || selectedPlayer ? "hidden" : "";
 
     return () => {
       document.body.style.overflow = "";
     };
-  }, [menuOpen, hasStatsForSelected]);
-
-  // Move focus into the popup when it opens, and restore focus on close.
-  useEffect(() => {
-    if (hasStatsForSelected) {
-      statsCloseButtonRef.current?.focus();
-    } else if (statsPreviouslyFocusedRef.current) {
-      statsPreviouslyFocusedRef.current.focus();
-      statsPreviouslyFocusedRef.current = null;
-    }
-  }, [hasStatsForSelected]);
+  }, [menuOpen, selectedPlayer]);
 
   const legacyReveal = useReveal();
   const commandReveal = useReveal();
@@ -565,6 +674,7 @@ function App() {
   const rosterReveal = useReveal();
   const rosterGridReveal = useReveal();
   const warsReveal = useReveal();
+  const rankingsReveal = useReveal();
   const liveReveal = useReveal();
   const rulesReveal = useReveal();
   const communityReveal = useReveal();
@@ -574,6 +684,7 @@ function App() {
     { href: "#legacy", label: t.legacy },
     { href: "#roster", label: t.roster },
     { href: "#wars", label: t.wars },
+    { href: "#rankings", label: t.rankings },
     { href: "#live", label: t.live }
   ];
 
@@ -785,7 +896,7 @@ function App() {
           </div>
 
           <div>
-            <b>{members.length}</b>
+            <b>{roster.length}</b>
             <small>{t.members}</small>
           </div>
 
@@ -882,188 +993,53 @@ function App() {
       </section>
 
       {/* ROSTER */}
-      <section className="roster" id="roster">
-        <div className="roster-header reveal" ref={rosterReveal}>
-          <div>
-            <span>03 / {t.rosterSection}</span>
+      <Roster
+        t={t}
+        roster={roster}
+        statsImages={memberStats}
+        onSelectPlayer={setSelectedPlayer}
+        rosterReveal={rosterReveal}
+        rosterGridReveal={rosterGridReveal}
+      />
 
-            <h2>
-              {t.theRoster}
-              <br />
-              <strong>{t.rosterWord}</strong>
-            </h2>
-          </div>
-
-          <div className="roster-total">
-            <strong>{members.length}</strong>
-            <span>{t.activeMembers}</span>
-          </div>
-        </div>
-
-        <div className="roster-grid reveal" ref={rosterGridReveal}>
-          {members.map((member, index) => {
-            const isClickable = !!memberStats[member];
-
-            return (
-              <div
-                className={`player ${
-                  isClickable ? "player-has-stats" : ""
-                }`}
-                key={member}
-                onClick={() => handleMemberClick(member)}
-                role={isClickable ? "button" : undefined}
-                tabIndex={isClickable ? 0 : undefined}
-                onKeyDown={
-                  isClickable
-                    ? (event) => {
-                        if (event.key === "Enter" || event.key === " ") {
-                          event.preventDefault();
-                          handleMemberClick(member);
-                        }
-                      }
-                    : undefined
-                }
-                aria-haspopup={isClickable ? "dialog" : undefined}
-              >
-                <span className="player-number">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-
-                <strong>{member}</strong>
-
-                <span className="player-arrow">↗</span>
-              </div>
-            );
-          })}
-        </div>
-      </section>
-
-      {/* MEMBER STATS POPUP */}
-      {hasStatsForSelected && (
-        <div
-          className="stats-popup"
-          onMouseDown={(event) => {
-            if (event.target === event.currentTarget) {
-              closeStatsPopup();
-            }
-          }}
-        >
-          <div
-            className="stats-popup-content"
-            role="dialog"
-            aria-modal="true"
-            aria-label={`${selectedMember} — ${t.statsFor}`}
-          >
-            <div className="stats-popup-header">
-              <span className="stats-popup-eyebrow">{t.statsFor}</span>
-              <h3>{selectedMember}</h3>
-            </div>
-
-            <button
-              type="button"
-              className="stats-popup-close"
-              onClick={closeStatsPopup}
-              aria-label={t.statsClose}
-              ref={statsCloseButtonRef}
-            >
-              ×
-            </button>
-
-            <div className="stats-popup-image-wrap">
-              <img
-                src={memberStats[selectedMember]}
-                alt={`${selectedMember} stats`}
-              />
-            </div>
-          </div>
-        </div>
+      {/* PLAYER PROFILE MODAL */}
+      {selectedPlayer && (
+        <PlayerProfileModal
+          t={t}
+          player={selectedPlayer}
+          statsImage={memberStats[selectedPlayer.name]}
+          onClose={closeProfile}
+        />
       )}
 
-      {/* WAR ROOM */}
-      <section className="wars" id="wars">
-        <div className="wars-header reveal" ref={warsReveal}>
-          <div>
-            <span>04 / {t.competition}</span>
+      {/* WAR ROOM / MATCH HISTORY */}
+      <MatchHistory
+        t={t}
+        language={language}
+        matchHistory={matchHistory}
+        victories={victories}
+        warsReveal={warsReveal}
+      />
 
-            <h2>
-              {t.warRoom}
-              <br />
-              <strong>{t.warRoom2}</strong>
-            </h2>
-          </div>
+      {/* RANKINGS: LEADERBOARDS / RECORDS / ACHIEVEMENTS */}
+      <Rankings t={t} rankingsReveal={rankingsReveal} />
 
-          <div className="record">
-            <span>{t.clanRecord}</span>
-            <strong>125+</strong>
-            <small>{t.recordedVictories}</small>
-          </div>
-        </div>
-
-        <div className="war-feature">
-          <div className="war-left">
-            <span className="war-label">{t.victoryArchive}</span>
-
-            <h3>
-              {t.recordTitle1}
-              <br />
-              {t.recordTitle2}
-              <br />
-              <strong>{t.recordTitle3}</strong>
-            </h3>
-
-            <p>{t.recordDescription}</p>
-          </div>
-
-          <div className="victory-cloud">
-            {victories.map((victory, index) => (
-              <span key={`${victory}-${index}`}>{victory}</span>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* LIVE */}
-      <section className="live" id="live">
-        <div className="live-pattern"></div>
-
-        <div className="live-content reveal" ref={liveReveal}>
-          <div className="live-top">
-            <span className="live-dot"></span>
-            {t.liveLabel}
-          </div>
-
-          <span className="live-number">
-            05 / {t.liveMatches}
-          </span>
-
-          <h2>
-            {t.seeLMM}
-            <br />
-            <strong>{t.inBattle}</strong>
-          </h2>
-
-          <p>{t.liveDescription}</p>
-
-          <a
-            href="https://www.tiktok.com/@zerxda2"
-            target="_blank"
-            rel="noreferrer"
-            className="live-btn"
-          >
-            <span>▶</span>
-            {t.watchTikTok}
-            <b>↗</b>
-          </a>
-
-          <div className="tiktok-handle">{t.tiktok}</div>
-        </div>
-      </section>
+      {/* LIVE MATCH CENTER */}
+      <LiveMatchCenter
+        t={t}
+        language={language}
+        liveMatch={liveMatch}
+        nextMatch={nextMatch}
+        connectionStatus={connectionStatus}
+        streamOptions={streamOptions}
+        liveReveal={liveReveal}
+      />
 
       {/* RULES */}
       <section className="rules">
         <div className="section-top reveal" ref={rulesReveal}>
           <div>
-            <span>06 / {t.clanCode}</span>
+            <span>07 / {t.clanCode}</span>
 
             <h2>
               {t.rulesTitle1}
@@ -1099,7 +1075,7 @@ function App() {
       {/* COMMUNITY */}
       <section className="community">
         <div className="community-inner reveal" ref={communityReveal}>
-          <span>07 / {t.community}</span>
+          <span>08 / {t.community}</span>
 
           <h2>
             {t.joinTitle1}
@@ -1142,18 +1118,7 @@ function App() {
       </section>
 
       {/* FOOTER */}
-      <footer>
-        <div className="footer-logo">
-          <strong>LMM</strong>
-          <span>LEGENDS OF MINIMILITIA</span>
-        </div>
-
-        <div className="footer-middle">
-          {t.establishedShort} 2019 • 125+ {t.victories} • 2026
-        </div>
-
-        <div className="footer-right">{t.footer}</div>
-      </footer>
+      <Footer t={t} navLinks={navLinks} />
     </div>
   );
 }
